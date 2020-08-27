@@ -1,0 +1,48 @@
+/* * Challenge Contents Class Starts Here */
+
+.gameImage {
+	width: 100px;
+	height: 100px;
+}
+/* *  Pill Class Starts Here */
+
+.pill {
+	padding: 0px 8px;
+	border-radius: 4px;
+	max-height: 22px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* * Button Class Starts Here */
+
+.buttonContainer {
+	display: inline-block;
+	padding: 14px 16px;
+	border-radius: 5px;
+	transition: all 0.5s;
+}
+
+.buttonContents {
+	display: flex;
+}
+
+.buttonContainer:hover {
+	filter: var(--hover);
+}
+
+/* * GameHeader Class Starts Here */
+.gifHeader {
+	display: flex;
+	flex-flow: column;
+	justify-content: flex-end;
+	background-image: url("../assets/games/FallGuys.png");
+
+	height: 245px;
+	padding: 12px;
+}
+
+.gifFallGuys {
+	background-image: url("../assets/games/gifs/fallGuys.gif");
+}

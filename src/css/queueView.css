@@ -1,0 +1,13 @@
+.currentQueue {
+	background: var(--main-black);
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+
+.card {
+	background: white;
+	padding: 12px 15px;
+	box-shadow: var(--shadow);
+	margin-bottom: 12px;
+	border-radius: 5px;
+}
