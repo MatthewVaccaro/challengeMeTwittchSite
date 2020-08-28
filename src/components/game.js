@@ -6,7 +6,7 @@ import '../css/base.css';
 import '../css/tackOn.css';
 
 const Game = ({ game, gameImage }) => {
-	const link = game.split(' ').join('');
+	const link = game.split(' ').join('-');
 	console.log(link);
 	return (
 		<div>

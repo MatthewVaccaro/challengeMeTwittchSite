@@ -21,11 +21,14 @@
 	display: inline-block;
 	padding: 14px 16px;
 	border-radius: 5px;
+	width: 100%;
 	transition: all 0.5s;
+	box-sizing: border-box;
 }
 
 .buttonContents {
 	display: flex;
+	justify-content: center;
 }
 
 .buttonContainer:hover {
@@ -37,12 +40,36 @@
 	display: flex;
 	flex-flow: column;
 	justify-content: flex-end;
-	background-image: url("../assets/games/FallGuys.png");
-
+	/* background-image: url("../assets/games/FallGuys.png"); */
+	background: blue;
+	width: 100%;
 	height: 245px;
-	padding: 12px;
 }
 
-.gifFallGuys {
-	background-image: url("../assets/games/gifs/fallGuys.gif");
+.gameTitle {
+	margin-top: -55px;
+	margin-left: 12px;
+}
+
+.backButton {
+	position: absolute;
+	top: 20px;
+	left: 12px;
+}
+/* * Type Input Class Starts Here */
+
+.inputContainer {
+	background: white;
+	height: 64px;
+	border-radius: 5px;
+	box-shadow: var(--shadow);
+}
+
+.typeContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 33%;
+	height: 100%;
+	border-radius: 5px;
 }

@@ -70,6 +70,7 @@ const QueueView = () => {
 	return (
 		<div>
 			<div className=" currentQueue viewPadding">
+				<h2 className="marginBottom25"> Current Challenge</h2>
 				<ChallengeContents
 					game={'Fall Guys'}
 					gameImage={fallGuys}
@@ -78,7 +79,7 @@ const QueueView = () => {
 					user={'SuperDuperNope420'}
 					color={'white'}
 				/>
-				<div className="flex justifyContentSpaceBetween marginTop35">
+				<div className="flex gap20 marginTop25">
 					<Button
 						link={'/selectGame'}
 						exLink={false}
