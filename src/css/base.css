@@ -119,6 +119,20 @@ span {
 	font-weight: bold;
 }
 
+.label {
+	font-size: var(--p);
+	color: var(--second-black);
+	text-align: left;
+	font-weight: 600;
+	font-family: "Roboto", serif;
+	margin-bottom: 10px;
+}
+
+.baseContainer {
+	max-width: 782px;
+	margin: 0 auto;
+}
+
 @media only screen and (max-width: 500px) {
 	.viewPadding {
 		padding-right: 12px;

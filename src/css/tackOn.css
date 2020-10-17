@@ -348,6 +348,14 @@
 	color: var(--main-black);
 }
 
+.thridBlackBG {
+	background: var(--third-black);
+}
+
+.secondBlack {
+	color: var(--second-black);
+}
+
 .blue {
 	color: var(--blue);
 }

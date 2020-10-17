@@ -73,3 +73,90 @@
 	height: 100%;
 	border-radius: 5px;
 }
+
+.toggleContainer {
+	width: 40px;
+	height: 20px;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.rail {
+	opacity: 30%;
+	width: 40px;
+	height: 10px;
+	border-radius: 10px;
+}
+
+.circle {
+	width: 20px;
+	height: 20px;
+	border-radius: 30px;
+	position: absolute;
+	transition: all 0.3s;
+}
+
+.left {
+	left: 0px;
+	background: var(--main-black);
+}
+
+.right {
+	left: 20px;
+	background: var(--green);
+}
+
+.inactive {
+	background: var(--main-black);
+}
+
+.active {
+	background: var(--green);
+}
+
+.photoButtonContainer {
+	margin-top: 25px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 50%;
+}
+
+.fakeUploadButton {
+	padding: 18px 28px;
+	text-align: center;
+	width: 50%;
+	font-size: var(--p);
+	font-weight: 700;
+	font-family: "Roboto", serif;
+	color: var(--blue);
+	background: rgba(2, 133, 255, 0.10);
+	display: block;
+	position: absolute;
+	border-radius: 6px;
+	top: 19px;
+	transition: all 0.5s;
+	cursor: pointer;
+}
+
+.fakeUploadButton:hover {
+	background: var(--blue);
+	color: white;
+}
+
+.uploadButton {
+	opacity: 0%;
+	width: 50%;
+}
+
+.imgPreview {
+	max-width: 90px;
+	min-width: 90px;
+	max-height: 90px;
+	min-height: 90px;
+	object-fit: cover;
+	border-radius: 5px;
+}
