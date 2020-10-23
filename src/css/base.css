@@ -59,7 +59,8 @@ h2 {
 	margin: 0px;
 }
 
-h3 {
+h3,
+.h3 {
 	font-size: var(--h3);
 	color: var(--second-black);
 	text-align: left;

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-
-import addPhoto from '../components/addPhoto';
 import AddPhoto from '../components/addPhoto';
 
 const AddGame = (props) => {
@@ -11,6 +10,8 @@ const AddGame = (props) => {
 		gameGif: ''
 	});
 
+	const history = useHistory();
+
 	function addGame(e) {
 		e.preventDefault();
 		if (!gameData.gameTitle) {
@@ -19,7 +20,7 @@ const AddGame = (props) => {
 		axios
 			.post('https://challengerbackend.herokuapp.com/api/games', gameData)
 			.then((res) => {
-				console.log(res.data);
+				history.push('/dashboard');
 			})
 			.catch((error) => {
 				console.log(error);
@@ -40,7 +41,7 @@ const AddGame = (props) => {
 					className="secondBlack"
 				>
 					Add New Game
-				</h2>
+				</h2>/
 			</div>
 			<form onSubmit={addGame}>
 				<div className="card">

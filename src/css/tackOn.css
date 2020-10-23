@@ -360,6 +360,14 @@
 	color: var(--blue);
 }
 
+.red {
+	color: var(--red);
+}
+
 .gradient {
 	background: var(--gradient);
+}
+
+.rotate180 {
+	transform: rotate(180deg);
 }

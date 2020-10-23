@@ -7,7 +7,7 @@ import challengeView from './views/challengeView';
 import selectGameView from './views/selectGameView';
 import Dashboard from './views/dashboard';
 import AddGame from './views/addGame';
-import AddPhoto from './components/addPhoto';
+import singleGameView from './views/singleGameView';
 //Components
 import Button from './components/button';
 function App() {
@@ -15,7 +15,7 @@ function App() {
 		<div className="App">
 			<Route exact path="/dashboard" component={Dashboard} />
 			<Route exact path="/addgame" component={AddGame} />
-			<Route exact path="/test" component={AddPhoto} />
+			<Route exact path="/:game/:id" component={singleGameView} />
 			<Route exact path="/" component={queueView} />
 			<Route exact path="/selectGame" component={selectGameView} />
 			<Route exact path="/challenges/:id" component={challengeView} />
