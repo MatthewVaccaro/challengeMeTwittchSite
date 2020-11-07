@@ -63,14 +63,10 @@ const QueueView = () => {
 		}
 	];
 
-	data.map((cv) => {
-		console.log(cv);
-	});
-
 	return (
 		<div>
 			<div className=" currentQueue viewPadding">
-				<h2 className="marginBottom25"> Current Challenge</h2>
+				<h2 className=""> Current Challenge</h2>
 				<ChallengeContents
 					game={'Fall Guys'}
 					gameImage={fallGuys}
