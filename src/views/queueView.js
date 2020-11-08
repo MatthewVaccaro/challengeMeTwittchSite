@@ -2,7 +2,9 @@ import React from 'react';
 import '../css/queueView.css';
 // Componentsd
 import ChallengeContents from '../components/challengeContents';
-import Button from '../components/button';
+import Button from '../utils/Button';
+import Tag from '../baseComponents/tag';
+import ChallengeContent from '../baseComponents/challengeContent';
 // Assets
 import fallGuys from '../assets/games/FallGuys.png';
 import cod from '../assets/games/cod.png';
@@ -64,52 +66,17 @@ const QueueView = () => {
 	];
 
 	return (
-		<div>
-			<div className=" currentQueue viewPadding">
-				<h2 className=""> Current Challenge</h2>
-				<ChallengeContents
-					game={'Fall Guys'}
-					gameImage={fallGuys}
-					challenge={'Take a shot everytime you fall!'}
-					type={'Troll'}
-					user={'SuperDuperNope420'}
-					color={'white'}
-				/>
-				<div className="flex gap20 marginTop25">
-					<Button
-						link={'/selectGame'}
-						exLink={false}
-						color={'gradient'}
-						icon={challengeIcon}
-						text={'Create Challenge'}
-					/>
-					<Button
-						link={'https://www.facebook.com/gaming/shupp610/'}
-						exLink={true}
-						color={'blueBG'}
-						icon={facebookIcon}
-						text={'Watch Now'}
-					/>
+		<div className="container">
+			{/* <div>
+				<img src="" alt="profile Photo" />
+				<div className="">
+					<a> Watch Stream</a>
+					<img src="" alt="External Link Icon" />
 				</div>
-			</div>
-			<div className=" viewPadding">
-				<p className="opacity75 marginTop15 marginBottom5"> Next Approved Challenges</p>
-				{data.map((cv) => {
-					return (
-						<div className="card">
-							<ChallengeContents
-								game={cv.game}
-								gameImage={cv.gameImage}
-								challenge={cv.challenge}
-								type={cv.type}
-								user={cv.user}
-								color={'black'}
-								key={Math.random()}
-							/>
-						</div>
-					);
-				})}
-			</div>
+			</div> */}
+
+			{/* <Button size={'full'} text={'Fuck Yourself'} bg={'green'} textColor={'white'} icon={''} /> */}
+			<ChallengeContent />
 		</div>
 	);
 };
