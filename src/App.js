@@ -7,9 +7,6 @@ import selectGameView from './views/selectGameView';
 import Dashboard from './views/dashboard';
 import AddGame from './views/addGame';
 import singleGameView from './views/singleGameView';
-// Testing
-import Tag from './baseComponents/tag';
-import ChallengeContent from './baseComponents/challengeContent';
 //Components
 function App() {
 	return (
@@ -20,9 +17,6 @@ function App() {
 			<Route exact path="/" component={queueView} />
 			<Route exact path="/selectGame" component={selectGameView} />
 			<Route exact path="/challenges/:id" component={challengeView} />
-			<Route exact path="/test" component={Tag} />
-
-			{/* ^ The route about will most likely need an id attribute - Id will point to which game */}
 		</div>
 	);
 }
