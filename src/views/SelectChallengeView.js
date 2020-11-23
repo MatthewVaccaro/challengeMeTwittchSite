@@ -40,7 +40,7 @@ const SelectChallengeView = (props) => {
 	];
 
 	return (
-		<div className="container">
+		<div className="container px-3 ">
 			<Back />
 			<h1 className="h1-dark mt-2 mb-8 "> {game} Challenges </h1>
 			<Input

@@ -64,7 +64,7 @@ const QueueView = () => {
 	];
 
 	return (
-		<div className="container">
+		<div className="container px-3 mx-auto">
 			<div className="flex items-center my-4">
 				<img
 					style={{ width: '80px', height: '80px' }}

@@ -41,18 +41,6 @@ module.exports = {
 			orange_100: '#FFCC82',
 			black_100: '#939393',
 			white_100: '#DADADA'
-		},
-		screens: {
-			sm: '375px',
-			md: '768px',
-			lg: '1024px'
-		},
-		container: {
-			padding: {
-				sm: '12px',
-				lg: '4rem',
-				xl: '5rem'
-			}
 		}
 	},
 	variants: {},
