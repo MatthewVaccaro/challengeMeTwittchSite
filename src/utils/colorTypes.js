@@ -1,3 +1,3 @@
-const colors = [ [ 'meme', 'green' ], [ 'difficult', 'orange' ], [ 'troll', 'red' ], [ 'custom', 'blue' ] ];
+const colors = [ [ 'Meme', 'green' ], [ 'Difficult', 'orange' ], [ 'Troll', 'red' ], [ 'Custom', 'blue' ] ];
 
 export default colors;

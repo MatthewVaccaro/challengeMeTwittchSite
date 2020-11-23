@@ -40,7 +40,7 @@ module.exports = {
 			blue_100: '#83C2FF',
 			orange_100: '#FFCC82',
 			black_100: '#939393',
-			white_100: '#F7F7F7'
+			white_100: '#DADADA'
 		},
 		screens: {
 			sm: '375px',

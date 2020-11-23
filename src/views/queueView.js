@@ -1,6 +1,5 @@
 import React from 'react';
-import '../css/queueView.css';
-// Componentsd
+// Component
 import Button from '../utils/Button';
 import Challenge from '../baseComponents/Challenge';
 import CurrentChallenge from '../baseComponents/CurrentChallenge';
@@ -76,13 +75,22 @@ const QueueView = () => {
 				<div>
 					<h1 class="h1-dark"> Shupp610 </h1>
 					<div className="flex">
-						<a className="font-semibold text-blue mr-1"> Watch Stream</a>
+						<a href="https://www.facebook.com/gaming/shupp610/" className="font-semibold text-blue mr-1">
+							Watch Stream
+						</a>
 						<img src={externalLinkIcon} alt="External Link Icon" />
 					</div>
 				</div>
 			</div>
 
-			<Button size={'full'} text={'Send Challenge'} bg={'blue'} textColor={'white'} icon={'challenge'} />
+			<Button
+				size={'full'}
+				text={'Send Challenge'}
+				bg={'blue'}
+				textColor={'white'}
+				icon={'challenge'}
+				location={'/selectGame'}
+			/>
 			<div className=" mt-5 ">
 				{data ? (
 					data.map((object) => {
