@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 //Components
 import Back from '../utils/Back';
 import Input from '../utils/Input';
@@ -13,12 +13,23 @@ const SelectChallengeView = (props) => {
 		name: '',
 		challenge: ''
 	});
-	const [ type, setType ] = useState('Troll');
+	const [ type, setType ] = useState('Meme');
 	const color = colorTypes.filter((cv) => {
 		if (cv[0] === type) {
 			return cv;
 		}
 	});
+
+	useEffect(
+		() => {
+			console.log('use Effect', type);
+			if (type === 'Custom') {
+				console.log('use Effect inner', select);
+				setSelect({ ...select, challenge: '' });
+			}
+		},
+		[ type ]
+	);
 
 	const data = [
 		{
@@ -46,7 +57,7 @@ const SelectChallengeView = (props) => {
 			<Input
 				name={'name'}
 				placeholder={'Enter Your name'}
-				label={'Enter Name'}
+				label={'Initiator’s Name'}
 				value={select.name}
 				setState={setSelect}
 				state={select}
@@ -57,13 +68,28 @@ const SelectChallengeView = (props) => {
 			<p className="p-mid font-semibold">
 				<span className={`text-${color[0][1]}`}>{type}</span> Challenges
 			</p>
-			{data.map((cv) => {
-				if (cv.type === type) {
-					return (
-						<Card header={cv.title} leftElement={<Radio obj={cv} state={select} setState={setSelect} />} />
-					);
-				}
-			})}
+			{type === 'Custom' ? (
+				<Input
+					name={'challenge'}
+					placeholder={'Enter Custom Challenge Here'}
+					label={''}
+					value={select.challenge}
+					setState={setSelect}
+					state={select}
+					type={'text'}
+				/>
+			) : (
+				data.map((cv) => {
+					if (cv.type === type) {
+						return (
+							<Card
+								header={cv.title}
+								leftElement={<Radio obj={cv} state={select} setState={setSelect} />}
+							/>
+						);
+					}
+				})
+			)}
 			<div
 				className="absolute bottom-0 transition-all duration-300 "
 				style={
