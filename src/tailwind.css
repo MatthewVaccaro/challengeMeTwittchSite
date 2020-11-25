@@ -1,0 +1,33 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.h1-dark {
+	@apply text-4xl font-bold text-black font-sans leading-10;
+}
+
+.h1-light {
+	@apply text-4xl font-bold text-white font-sans leading-10;
+}
+
+.h3-dark {
+	@apply text-lg text-black font-semibold;
+}
+
+.h3-light {
+	@apply text-lg text-white font-semibold;
+}
+
+.p-mid {
+	@apply text-base text-black opacity-70;
+}
+
+.p-light {
+	@apply text-base text-white opacity-70;
+}
+
+html {
+	background: #f5f5f5;
+}
