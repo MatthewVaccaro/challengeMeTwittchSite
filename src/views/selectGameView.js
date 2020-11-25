@@ -40,7 +40,7 @@ const selectGameView = () => {
 		}
 	];
 	return (
-		<div className="container">
+		<div className="container px-3 mx-auto">
 			<Back />
 
 			<h1 className="h1-dark"> Select Game</h1>

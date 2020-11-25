@@ -6,8 +6,8 @@ const Card = ({ image, header, sub, icon, location, leftElement }) => {
 	return (
 		<div>
 			{location ? (
-				<div className="bg-white shadow-lg rounded my-3 p-3 flex justify-between items-center ">
-					<Link to={location}>
+				<Link to={location}>
+					<div className="bg-white shadow-lg rounded my-3 p-3 flex justify-between items-center ">
 						<div className="flex items-center">
 							{leftElement}
 							<div className="flex-col">
@@ -16,8 +16,8 @@ const Card = ({ image, header, sub, icon, location, leftElement }) => {
 							</div>
 						</div>
 						<img src={icon} />
-					</Link>
-				</div>
+					</div>
+				</Link>
 			) : (
 				<div className="bg-white shadow-lg rounded my-3 p-3 flex justify-between items-center ">
 					<div className="flex items-center">

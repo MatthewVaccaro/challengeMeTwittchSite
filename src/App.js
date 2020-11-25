@@ -7,6 +7,7 @@ import selectGameView from './views/selectGameView';
 import Dashboard from './views/dashboard';
 import AddGame from './views/addGame';
 import EditChallengeView from './views/EditChallengeView';
+import CurrentChallenge from './baseComponents/CurrentChallenge';
 //Components
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 			<Route exact path="/" component={queueView} />
 			<Route exact path="/selectGame" component={selectGameView} />
 			<Route exact path="/challenges/:id" component={SelectChallengeView} />
+			<Route exact path="/test" component={CurrentChallenge} />
 		</div>
 	);
 }
