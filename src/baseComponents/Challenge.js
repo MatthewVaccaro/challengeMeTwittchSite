@@ -1,53 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Tag from './tag';
-import cod from '../assets/games/cod.png';
 import darkChallengeIcon from '../assets/icons/darkChallengeIcon.svg';
-import challengeIcon from '../assets/icons/challengeIcon.svg';
+import axios from 'axios';
+import Upvote from './upvote';
 
-const Challenge = ({ text, game, user, tag, current }) => {
+const Challenge = ({ contents, user, tag, upvote, data }) => {
+	function axiosUpvote(data) {
+		axios
+			.put(`http://localhost:4000/api/userApp/entryUpVote/${data.id}`, { vote: 'plus' })
+			.then((res) => {
+				return res.data;
+			})
+			.catch((err) => {
+				return console.log(err);
+			});
+	}
 	return (
-		<div className={`flex-col shadow-lg rounded ${current ? 'bg-black ' : 'bg-white '} `}>
-			<div className="flex items-center">
-				<img src={game} className=" object-cover h-16 w-16 m-3" alt="Game Artwork" />
-				<div className="flex flex-col">
-					{current ? <p className="text-green text-sm "> Current Challenge</p> : ''}
-					<p className={` mr-3 ${current ? 'h3-light ' : 'h3-dark '} `}>{text}</p>
-				</div>
+		<div className={`flex-col shadow-xl rounded bg-white my-3`}>
+			<div className="pt-3 px-3 pb-2">
+				<Tag text={tag} />
+				<h2 className="h2-dark mt-2">{contents}</h2>
 			</div>
-			<div className={` h-px2 w-full opacity-10 ${current ? 'bg-white' : 'bg-black'} `} />
-			<div className="flex items-center justify-between">
-				<div className="flex items-center ">
-					<img src={current ? challengeIcon : darkChallengeIcon} className="ml-3 mr-2" alt="challenge icon" />
-					<p className={`font-semibold ${current ? 'p-light' : 'p-mid'} `}>{user}</p>
+			<div className=" px-3 py-2 bg-white_100 flex justify-between items-center ">
+				<div className="flex flex-col">
+					<div className="flex">
+						<img src={darkChallengeIcon} alt="Challenge Icon" />
+						<p className="p-mid ml-3 "> Challenger </p>
+					</div>
+					<div className="flex ">
+						<h3 className="h3-dark mr-2">{user} </h3>
+
+						{upvote ? (
+							<div className=" bg-white_200 py-px2 px-1 rounded">
+								<p className="p-dark"> + {upvote} </p>
+							</div>
+						) : (
+							''
+						)}
+					</div>
 				</div>
-				<div className="mx-2 my-2 mr-3">
-					<Tag text={tag} color={'green'} />
-				</div>
+				<Upvote id={data.id} />
 			</div>
 		</div>
 	);
 };
 
 export default Challenge;
-
-{
-	/* <div className="bg-black py-3 px-4 rounded-lg w-full bg-cover bg-center">
-			<div className="flex items-center mb-4">
-				<img className="w-16 h-16 mr-4 border-2 border-white rounded-md" src={image} />
-				<div className="flex flex-col">
-					<p className="text-green text-sm "> Current Challenge</p>
-					<p className="h3-light">{'This is some challenge stuff'}</p>
-				</div>
-			</div>
-			<div className="bg-white h-px2 opacity-10 mt-2" />
-			<div className="flex items-center justify-between">
-				<div className="flex items-center ">
-					<img src={challengeIcon} className="ml-3 mr-2" alt="challenge icon" />
-					<p className="p-light font-semibold">{'poop Doop'}</p>
-				</div>
-				<div className="my-2">
-					<Tag text={'meme'} />
-				</div>
-			</div>
-		</div> */
-}

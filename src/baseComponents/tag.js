@@ -14,7 +14,7 @@ const Tag = ({ text }) => {
 
 	return (
 		<div className={`bg-${currentColor} inline-block px-px7 py-px2 rounded`}>
-			<p className="text-sm text-white font-semibold"> {text} </p>
+			<p className="text-sm text-white font-semibold capitalize"> {text} </p>
 		</div>
 	);
 };

@@ -40,7 +40,8 @@ module.exports = {
 			blue_100: '#83C2FF',
 			orange_100: '#FFCC82',
 			black_100: '#939393',
-			white_100: '#DADADA'
+			white_200: '#DADADA',
+			white_100: '#F5F5F5'
 		}
 	},
 	variants: {},
