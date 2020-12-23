@@ -51,7 +51,7 @@ const SelectChallengeView = (props) => {
 	];
 
 	return (
-		<div className="container px-3 mx-auto ">
+		<div className="container px-3 mx-auto sm:max-w-5xl">
 			<Back />
 			<h1 className="h1-dark mt-2 mb-8 "> {game} Challenges </h1>
 			<Input

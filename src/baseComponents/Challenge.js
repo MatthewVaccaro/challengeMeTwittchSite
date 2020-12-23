@@ -39,7 +39,7 @@ const Challenge = ({ contents, user, tag, upvote, data }) => {
 						)}
 					</div>
 				</div>
-				<Upvote id={data.id} />
+				<Upvote />
 			</div>
 		</div>
 	);
