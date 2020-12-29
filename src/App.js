@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 //State
 import { EntriesProvider } from './global/entriesContext';
@@ -10,7 +10,6 @@ import SelectChallengeView from './views/SelectChallengeView';
 import selectGameView from './views/selectGameView';
 import Dashboard from './views/dashboard';
 import AddGame from './views/addGame';
-import CurrentChallenge from './baseComponents/CurrentChallenge';
 //Components
 function App() {
 	return (
@@ -21,7 +20,7 @@ function App() {
 			{/* Streamer 👆 User 👇 */}
 			<StreamProvider>
 				<EntriesProvider>
-					<Route exact path="/" component={queueView} />
+					<Route exact path="/:username" component={queueView} />
 				</EntriesProvider>
 				<Route exact path="/selectGame" component={selectGameView} />
 				<Route exact path="/challenges/:id" component={SelectChallengeView} />

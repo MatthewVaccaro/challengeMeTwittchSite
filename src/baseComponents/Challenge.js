@@ -4,17 +4,17 @@ import darkChallengeIcon from '../assets/icons/darkChallengeIcon.svg';
 import axios from 'axios';
 import Upvote from './upvote';
 
-const Challenge = ({ contents, user, tag, upvote, data }) => {
-	function axiosUpvote(data) {
-		axios
-			.put(`http://localhost:4000/api/userApp/entryUpVote/${data.id}`, { vote: 'plus' })
-			.then((res) => {
-				return res.data;
-			})
-			.catch((err) => {
-				return console.log(err);
-			});
-	}
+const Challenge = ({ contents, user, tag, upvote, id }) => {
+	// function axiosUpvote(data) {
+	// 	axios
+	// 		.put(`http://localhost:4000/api/userApp/entryUpVote/${data.id}`, { vote: 'plus' })
+	// 		.then((res) => {
+	// 			return res.data;
+	// 		})
+	// 		.catch((err) => {
+	// 			return console.log(err);
+	// 		});
+	// }
 	return (
 		<div className={`flex-col shadow-xl rounded bg-white my-3`}>
 			<div className="pt-3 px-3 pb-2">
@@ -25,9 +25,9 @@ const Challenge = ({ contents, user, tag, upvote, data }) => {
 				<div className="flex flex-col">
 					<div className="flex">
 						<img src={darkChallengeIcon} alt="Challenge Icon" />
-						<p className="p-mid ml-3 "> Challenger </p>
+						<p className="p-mid ml-1 "> Challenger </p>
 					</div>
-					<div className="flex ">
+					<div className="flex mt-1">
 						<h3 className="h3-dark mr-2">{user} </h3>
 
 						{upvote ? (
@@ -39,7 +39,7 @@ const Challenge = ({ contents, user, tag, upvote, data }) => {
 						)}
 					</div>
 				</div>
-				<Upvote />
+				<Upvote id={id} />
 			</div>
 		</div>
 	);
