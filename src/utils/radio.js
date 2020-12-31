@@ -2,7 +2,6 @@ import React from 'react';
 
 const Radio = ({ obj, state, setState }) => {
 	const toggle = state.challenge_id_fk === obj.id ? true : false;
-	console.log('obj', obj);
 	return (
 		<div
 			onClick={() => {

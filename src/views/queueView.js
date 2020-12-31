@@ -60,7 +60,7 @@ const QueueView = () => {
 					bg={'blue'}
 					icon={'challenge'}
 					size={'full'}
-					location={stream ? `/challenges/${stream.game_id_fk}` : ''}
+					location={stream ? `${stream.username}/challenges/${stream.game_id_fk}` : ''}
 				/>
 			</div>
 			<p className="p-mid mt-3 sm:mt-20"> Next in Queue</p>

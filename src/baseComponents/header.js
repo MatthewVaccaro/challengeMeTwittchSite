@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const Header = ({ image }) => {
 	const initialHeight = window.innerWidth > 600 ? '282px' : '203px';
 	const [ height, setHeight ] = useState(initialHeight);
-	console.log(initialHeight);
 
 	function reportWindowSize() {
 		if (window.innerWidth > 600 && height === '203px') {

@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 //Request
-import { GET_challenges } from '../axios/publicRequests';
+import { GET_challenges, POST_entry } from '../axios/publicRequests';
+//State
+import { StreamContext } from '../global/streamContext';
+
 //Components
 import Back from '../utils/Back';
 import Input from '../utils/Input';
@@ -10,7 +14,9 @@ import colorTypes from '../utils/colorTypes';
 import TypeTab from '../baseComponents/typeTab';
 import Button from '../utils/Button';
 const SelectChallengeView = (props) => {
-	const game = props.match.params.id;
+	const gameID = props.match.params.id;
+	const username = props.match.params.username;
+	let history = useHistory();
 	const [ challenges, setChallenges ] = useState();
 	// * object being sent to the DB
 	const [ select, setSelect ] = useState({
@@ -19,9 +25,8 @@ const SelectChallengeView = (props) => {
 	});
 
 	useEffect(() => {
-		GET_challenges(game)
+		GET_challenges(gameID)
 			.then((res) => {
-				console.log(res.data);
 				setChallenges(res.data);
 			})
 			.catch((error) => {
@@ -48,14 +53,7 @@ const SelectChallengeView = (props) => {
 	return (
 		<div className="container px-3 mx-auto sm:max-w-5xl">
 			<Back />
-			<h1
-				onClick={() => {
-					console.log(challenges);
-				}}
-				className="h1-dark mt-2 mb-8 "
-			>
-				{challenges ? challenges[0].title : ''} Challenges
-			</h1>
+			<h1 className="h1-dark mt-2 mb-8 ">{challenges ? challenges[0].title : ''} Challenges</h1>
 			<Input
 				name={'challenger'}
 				placeholder={'Enter Your name'}
@@ -86,7 +84,7 @@ const SelectChallengeView = (props) => {
 						return (
 							<Card
 								header={cv.content}
-								leftElement={<Radio obj={cv} state={select} setState={setSelect} />}
+								leftElement={<Radio obj={cv} state={select} setState={setSelect} key={cv.id} />}
 							/>
 						);
 					}
@@ -107,7 +105,20 @@ const SelectChallengeView = (props) => {
 					)
 				}
 			>
-				<Button text={'Send Challenge'} bg={'blue'} icon={'challenge'} />
+				<div
+					onClick={() => {
+						POST_entry(gameID, select)
+							.then((res) => {
+								console.log(res);
+								history.push(`/${username}`);
+							})
+							.catch((error) => {
+								console.log(error);
+							});
+					}}
+				>
+					<Button text={'Send Challenge'} bg={'blue'} icon={'challenge'} />
+				</div>
 			</div>
 		</div>
 	);

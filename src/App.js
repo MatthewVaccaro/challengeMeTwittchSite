@@ -23,7 +23,7 @@ function App() {
 					<Route exact path="/:username" component={queueView} />
 				</EntriesProvider>
 				<Route exact path="/selectGame" component={selectGameView} />
-				<Route exact path="/challenges/:id" component={SelectChallengeView} />
+				<Route exact path="/:username/challenges/:id" component={SelectChallengeView} />
 			</StreamProvider>
 		</div>
 	);
