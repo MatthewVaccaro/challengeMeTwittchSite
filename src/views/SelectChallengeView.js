@@ -12,6 +12,11 @@ import Button from '../utils/Button';
 const SelectChallengeView = (props) => {
 	const game = props.match.params.id;
 	const [ challenges, setChallenges ] = useState();
+	// * object being sent to the DB
+	const [ select, setSelect ] = useState({
+		challenger: '',
+		challenge_id_fk: ''
+	});
 
 	useEffect(() => {
 		GET_challenges(game)
@@ -24,10 +29,6 @@ const SelectChallengeView = (props) => {
 			});
 	}, []);
 
-	const [ select, setSelect ] = useState({
-		name: '',
-		challenge: ''
-	});
 	const [ type, setType ] = useState('meme');
 	const color = colorTypes.filter((cv) => {
 		if (cv[0] === type) {
@@ -44,34 +45,22 @@ const SelectChallengeView = (props) => {
 		[ type ]
 	);
 
-	// const data = [
-	// 	{
-	// 		title: 'Play Domination With Inverted JoyStick Controls. ',
-	// 		type: 'Meme'
-	// 	},
-	// 	{
-	// 		title: 'Sing Adele’s “Hello” everytime you get into a gun fight.',
-	// 		type: 'Troll'
-	// 	},
-	// 	{
-	// 		title: 'in S&D give extremely bad call-outs for your team',
-	// 		type: 'Meme'
-	// 	},
-	// 	{
-	// 		title: 'Can’t stop shooting for the whole game.',
-	// 		type: 'Meme'
-	// 	}
-	// ];
-
 	return (
 		<div className="container px-3 mx-auto sm:max-w-5xl">
 			<Back />
-			<h1 className="h1-dark mt-2 mb-8 "> Challenges </h1>
+			<h1
+				onClick={() => {
+					console.log(challenges);
+				}}
+				className="h1-dark mt-2 mb-8 "
+			>
+				{challenges ? challenges[0].title : ''} Challenges
+			</h1>
 			<Input
-				name={'name'}
+				name={'challenger'}
 				placeholder={'Enter Your name'}
 				label={'Initiator’s Name'}
-				value={select.name}
+				value={select.challenger}
 				setState={setSelect}
 				state={select}
 				type={'text'}
@@ -108,7 +97,7 @@ const SelectChallengeView = (props) => {
 			<div
 				className="absolute bottom-0 transition-all duration-300 "
 				style={
-					select.challenge && select.name ? (
+					select.challenger && select.challenge_id_fk ? (
 						{
 							left: '45%',
 							transform: 'translate(-45%, -10%)'
