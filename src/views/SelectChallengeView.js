@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+//Request
+import { GET_challenges } from '../axios/publicRequests';
 //Components
 import Back from '../utils/Back';
 import Input from '../utils/Input';
@@ -9,11 +11,24 @@ import TypeTab from '../baseComponents/typeTab';
 import Button from '../utils/Button';
 const SelectChallengeView = (props) => {
 	const game = props.match.params.id;
+	const [ challenges, setChallenges ] = useState();
+
+	useEffect(() => {
+		GET_challenges(game)
+			.then((res) => {
+				console.log(res.data);
+				setChallenges(res.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
+
 	const [ select, setSelect ] = useState({
 		name: '',
 		challenge: ''
 	});
-	const [ type, setType ] = useState('Meme');
+	const [ type, setType ] = useState('meme');
 	const color = colorTypes.filter((cv) => {
 		if (cv[0] === type) {
 			return cv;
@@ -22,38 +37,36 @@ const SelectChallengeView = (props) => {
 
 	useEffect(
 		() => {
-			console.log('use Effect', type);
 			if (type === 'Custom') {
-				console.log('use Effect inner', select);
 				setSelect({ ...select, challenge: '' });
 			}
 		},
 		[ type ]
 	);
 
-	const data = [
-		{
-			title: 'Play Domination With Inverted JoyStick Controls. ',
-			type: 'Meme'
-		},
-		{
-			title: 'Sing Adele’s “Hello” everytime you get into a gun fight.',
-			type: 'Troll'
-		},
-		{
-			title: 'in S&D give extremely bad call-outs for your team',
-			type: 'Meme'
-		},
-		{
-			title: 'Can’t stop shooting for the whole game.',
-			type: 'Meme'
-		}
-	];
+	// const data = [
+	// 	{
+	// 		title: 'Play Domination With Inverted JoyStick Controls. ',
+	// 		type: 'Meme'
+	// 	},
+	// 	{
+	// 		title: 'Sing Adele’s “Hello” everytime you get into a gun fight.',
+	// 		type: 'Troll'
+	// 	},
+	// 	{
+	// 		title: 'in S&D give extremely bad call-outs for your team',
+	// 		type: 'Meme'
+	// 	},
+	// 	{
+	// 		title: 'Can’t stop shooting for the whole game.',
+	// 		type: 'Meme'
+	// 	}
+	// ];
 
 	return (
 		<div className="container px-3 mx-auto sm:max-w-5xl">
 			<Back />
-			<h1 className="h1-dark mt-2 mb-8 "> {game} Challenges </h1>
+			<h1 className="h1-dark mt-2 mb-8 "> Challenges </h1>
 			<Input
 				name={'name'}
 				placeholder={'Enter Your name'}
@@ -66,9 +79,9 @@ const SelectChallengeView = (props) => {
 
 			<TypeTab state={type} setState={setType} />
 			<p className="p-mid font-semibold">
-				<span className={`text-${color[0][1]}`}>{type}</span> Challenges
+				<span className={`text-${color[0][1]} capitalize`}>{type}</span> Challenges
 			</p>
-			{type === 'Custom' ? (
+			{type === 'custom' ? (
 				<Input
 					name={'challenge'}
 					placeholder={'Enter Custom Challenge Here'}
@@ -78,17 +91,19 @@ const SelectChallengeView = (props) => {
 					state={select}
 					type={'text'}
 				/>
-			) : (
-				data.map((cv) => {
+			) : challenges ? (
+				challenges.map((cv) => {
 					if (cv.type === type) {
 						return (
 							<Card
-								header={cv.title}
+								header={cv.content}
 								leftElement={<Radio obj={cv} state={select} setState={setSelect} />}
 							/>
 						);
 					}
 				})
+			) : (
+				''
 			)}
 			<div
 				className="absolute bottom-0 transition-all duration-300 "

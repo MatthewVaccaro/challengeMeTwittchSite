@@ -32,18 +32,6 @@ const QueueView = () => {
 			});
 	}, []);
 
-	// useEffect(() => {
-	// 	axios
-	// 		.get('http://localhost:4000/api/userApp/allEntries/1')
-	// 		.then((res) => {
-	// 			console.log(res);
-	// 			setEntries(res.data);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-	// }, []);
-
 	return (
 		<div className="container px-3 mx-auto max-w-3/4 mt-4 sm:max-w-5xl sm:mt-0 sm:flex sm:flex-col sm:justify-center">
 			<Header />
@@ -52,11 +40,10 @@ const QueueView = () => {
 					<div className=" w-3 h-3 rounded-lg bg-green mr-2 " />
 					<p
 						onClick={() => {
-							console.log('This is stream in queue', stream);
+							console.log('This is stream in queue', stream, entries);
 						}}
 						className="p-light"
 					>
-						{' '}
 						Playing
 					</p>
 				</div>
@@ -73,7 +60,7 @@ const QueueView = () => {
 					bg={'blue'}
 					icon={'challenge'}
 					size={'full'}
-					location={'/challenges/1'}
+					location={stream ? `/challenges/${stream.game_id_fk}` : ''}
 				/>
 			</div>
 			<p className="p-mid mt-3 sm:mt-20"> Next in Queue</p>
