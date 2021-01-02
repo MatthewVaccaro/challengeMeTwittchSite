@@ -1,5 +1,5 @@
 import React from 'react';
-import colorTypes from '../utils/colorTypes';
+import { colorTypes } from '../utils/colorTypes';
 
 const TypeTab = ({ state, setState }) => {
 	const section = [ '0%', '25%', '50%', '75%' ];

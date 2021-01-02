@@ -3,13 +3,15 @@ import { useHistory } from 'react-router-dom';
 import { motion } from 'framer-motion';
 //Request
 import { GET_challenges, POST_entry, POST_customChallenge } from '../axios/publicRequests';
+//Animation
+import { buttonPop, position, tagTypes } from '../animationVariants';
 
 //Components
 import Back from '../utils/Back';
 import Input from '../utils/Input';
 import Card from '../utils/Card';
 import Radio from '../utils/radio';
-import colorTypes from '../utils/colorTypes';
+import { findColor } from '../utils/colorTypes';
 import TypeTab from '../baseComponents/typeTab';
 import Button from '../utils/Button';
 import Notification from '../baseComponents/notification';
@@ -29,24 +31,7 @@ const SelectChallengeView = (props) => {
 	});
 
 	const [ notification, setNotification ] = useState();
-
-	const position = {
-		start: { top: '-100px', opacity: '0%' },
-		end: { top: '0px', opacity: '100%' }
-	};
-
-	const buttonPop = {
-		end: {
-			left: '45%',
-			transform: 'translate(-45%, -30%)',
-			display: 'block'
-		},
-		start: {
-			left: '45%',
-			transform: 'translate(-45%, 100%)',
-			display: 'none'
-		}
-	};
+	const [ type, setType ] = useState('meme');
 
 	useEffect(() => {
 		GET_challenges(gameID)
@@ -57,13 +42,6 @@ const SelectChallengeView = (props) => {
 				console.log(error);
 			});
 	}, []);
-
-	const [ type, setType ] = useState('meme');
-	const color = colorTypes.filter((cv) => {
-		if (cv[0] === type) {
-			return cv;
-		}
-	});
 
 	useEffect(
 		() => {
@@ -114,7 +92,7 @@ const SelectChallengeView = (props) => {
 
 			<TypeTab state={type} setState={setType} />
 			<p className="p-mid font-semibold">
-				<span className={`text-${color[0][1]} capitalize`}>{type}</span> Challenges
+				<span className={`text-${findColor(type)[1]} capitalize`}>{type}</span> Challenges
 			</p>
 			{type === 'custom' ? (
 				<Input

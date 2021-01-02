@@ -1,14 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+// Animation
+import { size } from '../animationVariants';
 //Assets
 import successIcon from '../assets/icons/successIcon.svg';
 import errorIcon from '../assets/icons/errorIcon.svg';
 
 const Notification = ({ status }) => {
-	const size = {
-		start: { width: '0%' },
-		end: { width: '100%' }
-	};
 	return (
 		<div className="bg-white shadow-lg rounded flex pt-2  flex-col">
 			<div className="flex">
