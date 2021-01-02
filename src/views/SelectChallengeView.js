@@ -1,64 +1,90 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { motion } from 'framer-motion';
+//Request
+import { GET_challenges, POST_entry, POST_customChallenge } from '../axios/publicRequests';
+//Animation
+import { buttonPop, position, tagTypes } from '../animationVariants';
+
 //Components
 import Back from '../utils/Back';
 import Input from '../utils/Input';
 import Card from '../utils/Card';
 import Radio from '../utils/radio';
-import colorTypes from '../utils/colorTypes';
+import { findColor } from '../utils/colorTypes';
 import TypeTab from '../baseComponents/typeTab';
 import Button from '../utils/Button';
+import Notification from '../baseComponents/notification';
 const SelectChallengeView = (props) => {
-	const game = props.match.params.id;
+	// * Get id and username
+	const gameID = props.match.params.id;
+	const username = props.match.params.username;
+	// * used for moving history
+	let history = useHistory();
+	// * state for all challenges from DB
+	const [ challenges, setChallenges ] = useState();
+	// * object being sent to the DB
 	const [ select, setSelect ] = useState({
-		name: '',
-		challenge: ''
+		challenger: '',
+		challenge_id_fk: '',
+		customChallenge: ''
 	});
-	const [ type, setType ] = useState('Meme');
-	const color = colorTypes.filter((cv) => {
-		if (cv[0] === type) {
-			return cv;
-		}
-	});
+
+	const [ notification, setNotification ] = useState();
+	const [ type, setType ] = useState('meme');
+
+	useEffect(() => {
+		GET_challenges(gameID)
+			.then((res) => {
+				setChallenges(res.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 
 	useEffect(
 		() => {
-			console.log('use Effect', type);
-			if (type === 'Custom') {
-				console.log('use Effect inner', select);
-				setSelect({ ...select, challenge: '' });
+			if (type === 'custom') {
+				setSelect({ ...select, customChallenge: '', challenge_id_fk: '' });
 			}
 		},
 		[ type ]
 	);
 
-	const data = [
-		{
-			title: 'Play Domination With Inverted JoyStick Controls. ',
-			type: 'Meme'
-		},
-		{
-			title: 'Sing Adele’s “Hello” everytime you get into a gun fight.',
-			type: 'Troll'
-		},
-		{
-			title: 'in S&D give extremely bad call-outs for your team',
-			type: 'Meme'
-		},
-		{
-			title: 'Can’t stop shooting for the whole game.',
-			type: 'Meme'
-		}
-	];
-
 	return (
 		<div className="container px-3 mx-auto sm:max-w-5xl">
+			{notification ? notification === 'success' ? (
+				<motion.div
+					className="absolute z-20 w-full left-0"
+					initial="start"
+					animate="end"
+					variants={position}
+					transition={{ ease: 'easeIn', duration: 0.5 }}
+				>
+					<Notification status={true} />
+				</motion.div>
+			) : (
+				<motion.div
+					className="absolute z-20 w-full left-0"
+					initial="start"
+					animate="end"
+					variants={position}
+					transition={{ ease: 'easeIn', duration: 0.5 }}
+				>
+					<Notification status={false} />
+				</motion.div>
+			) : (
+				''
+			)}
+
 			<Back />
-			<h1 className="h1-dark mt-2 mb-8 "> {game} Challenges </h1>
+			<h1 className="h1-dark mt-2 mb-8 ">{challenges ? challenges[0].title : ''} Challenges</h1>
 			<Input
-				name={'name'}
+				name={'challenger'}
 				placeholder={'Enter Your name'}
 				label={'Initiator’s Name'}
-				value={select.name}
+				value={select.challenger}
 				setState={setSelect}
 				state={select}
 				type={'text'}
@@ -66,45 +92,88 @@ const SelectChallengeView = (props) => {
 
 			<TypeTab state={type} setState={setType} />
 			<p className="p-mid font-semibold">
-				<span className={`text-${color[0][1]}`}>{type}</span> Challenges
+				<span className={`text-${findColor(type)[1]} capitalize`}>{type}</span> Challenges
 			</p>
-			{type === 'Custom' ? (
+			{type === 'custom' ? (
 				<Input
-					name={'challenge'}
+					name={'customChallenge'}
 					placeholder={'Enter Custom Challenge Here'}
 					label={''}
-					value={select.challenge}
+					value={select.customChallenge}
 					setState={setSelect}
 					state={select}
 					type={'text'}
 				/>
-			) : (
-				data.map((cv) => {
+			) : challenges ? (
+				challenges.map((cv) => {
 					if (cv.type === type) {
 						return (
-							<Card
-								header={cv.title}
-								leftElement={<Radio obj={cv} state={select} setState={setSelect} />}
-							/>
+							<motion.div>
+								<Card
+									header={cv.content}
+									leftElement={<Radio obj={cv} state={select} setState={setSelect} key={cv.id} />}
+								/>
+							</motion.div>
 						);
 					}
 				})
+			) : (
+				''
 			)}
-			<div
-				className="absolute bottom-0 transition-all duration-300 "
-				style={
-					select.challenge && select.name ? (
-						{
-							left: '45%',
-							transform: 'translate(-45%, -10%)'
-						}
+			<motion.div
+				className="absolute bottom-0"
+				initial="start"
+				animate={
+					(select.challenger && select.challenge_id_fk) || (select.challenger && select.customChallenge) ? (
+						'end'
 					) : (
-						{ display: 'none' }
+						''
 					)
 				}
+				variants={buttonPop}
+				transition={{ type: 'spring', damping: 10, duration: 0.3 }}
+				onClick={() => {
+					// * this onclick is looking to see if the type is custom. If the challenge is custom
+					// * we need to create a customer challenge first before creating the entry.
+					if (select.challenger && select.customChallenge) {
+						// * Found to be custom so chain the axios calls
+						return POST_customChallenge(gameID, {
+							type: 'custom',
+							content: select.customChallenge
+						})
+							.then((res) => {
+								POST_entry(gameID, { challenge_id_fk: res.data[0].id, challenger: select.challenger })
+									.then(() => {
+										setNotification('success');
+										setTimeout(() => {
+											history.push(`/${username}`);
+										}, 3000);
+									})
+									.catch((error) => {
+										setNotification('error');
+										console.log(error);
+									});
+							})
+							.catch((err) => console.log(err));
+					}
+					else {
+						// * Since above isnt met then it's not custom
+						return POST_entry(gameID, select)
+							.then(() => {
+								setNotification('success');
+								setTimeout(() => {
+									history.push(`/${username}`);
+								}, 3000);
+							})
+							.catch((error) => {
+								setNotification('error');
+								console.log(error);
+							});
+					}
+				}}
 			>
 				<Button text={'Send Challenge'} bg={'blue'} icon={'challenge'} />
-			</div>
+			</motion.div>
 		</div>
 	);
 };

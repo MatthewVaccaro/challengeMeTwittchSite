@@ -17,3 +17,18 @@ export async function GET_entries(game_id_fk) {
 	const request = await axios.get(`${URL}/api/userApp/allEntries/${game_id_fk}`);
 	return request;
 }
+
+export async function GET_challenges(game_id_fk) {
+	const request = await axios.get(`${URL}/api/userApp/allChallenges/${game_id_fk}`);
+	return request;
+}
+
+export async function POST_entry(game_id_fk, data) {
+	const request = await axios.post(`${URL}/api/userApp/queueEntry/${game_id_fk}`, data);
+	return request;
+}
+
+export async function POST_customChallenge(game_id, data) {
+	const request = await axios.post(`${URL}/api/userApp/customChallenge/${game_id}`, data);
+	return request;
+}

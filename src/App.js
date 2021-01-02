@@ -10,6 +10,7 @@ import SelectChallengeView from './views/SelectChallengeView';
 import selectGameView from './views/selectGameView';
 import Dashboard from './views/dashboard';
 import AddGame from './views/addGame';
+import Notification from './baseComponents/notification';
 //Components
 function App() {
 	return (
@@ -23,7 +24,8 @@ function App() {
 					<Route exact path="/:username" component={queueView} />
 				</EntriesProvider>
 				<Route exact path="/selectGame" component={selectGameView} />
-				<Route exact path="/challenges/:id" component={SelectChallengeView} />
+				<Route exact path="/:username/challenges/:id" component={SelectChallengeView} />
+				<Route exact path="/test/test" component={Notification} />
 			</StreamProvider>
 		</div>
 	);

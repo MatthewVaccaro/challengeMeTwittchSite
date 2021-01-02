@@ -53,10 +53,10 @@ const Upvote = ({ id }) => {
 			}}
 			style={{ width: '50px', height: '50px' }}
 			className={`flex justify-center items-center rounded-md transition-all duration-300 ${toggle
-				? 'bg-green'
-				: 'bg-blue'}`}
+				? 'bg-red'
+				: 'bg-green'}`}
 		>
-			<h3 className="h3-light">+1</h3>
+			<h3 className="h3-light block">{toggle ? '-1' : '+1'}</h3>
 		</div>
 	);
 };
