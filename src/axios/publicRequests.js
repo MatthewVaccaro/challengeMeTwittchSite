@@ -27,3 +27,8 @@ export async function POST_entry(game_id_fk, data) {
 	const request = await axios.post(`${URL}/api/userApp/queueEntry/${game_id_fk}`, data);
 	return request;
 }
+
+export async function POST_customChallenge(game_id, data) {
+	const request = await axios.post(`${URL}/api/userApp/customChallenge/${game_id}`, data);
+	return request;
+}

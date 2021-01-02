@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { motion } from 'framer-motion';
 //Request
-import { GET_challenges, POST_entry } from '../axios/publicRequests';
+import { GET_challenges, POST_entry, POST_customChallenge } from '../axios/publicRequests';
 
 //Components
 import Back from '../utils/Back';
@@ -24,7 +24,8 @@ const SelectChallengeView = (props) => {
 	// * object being sent to the DB
 	const [ select, setSelect ] = useState({
 		challenger: '',
-		challenge_id_fk: ''
+		challenge_id_fk: '',
+		customChallenge: ''
 	});
 
 	const [ notification, setNotification ] = useState();
@@ -66,8 +67,8 @@ const SelectChallengeView = (props) => {
 
 	useEffect(
 		() => {
-			if (type === 'Custom') {
-				setSelect({ ...select, challenge: '' });
+			if (type === 'custom') {
+				setSelect({ ...select, customChallenge: '', challenge_id_fk: '' });
 			}
 		},
 		[ type ]
@@ -117,10 +118,10 @@ const SelectChallengeView = (props) => {
 			</p>
 			{type === 'custom' ? (
 				<Input
-					name={'challenge'}
+					name={'customChallenge'}
 					placeholder={'Enter Custom Challenge Here'}
 					label={''}
-					value={select.challenge}
+					value={select.customChallenge}
 					setState={setSelect}
 					state={select}
 					type={'text'}
@@ -129,10 +130,12 @@ const SelectChallengeView = (props) => {
 				challenges.map((cv) => {
 					if (cv.type === type) {
 						return (
-							<Card
-								header={cv.content}
-								leftElement={<Radio obj={cv} state={select} setState={setSelect} key={cv.id} />}
-							/>
+							<motion.div>
+								<Card
+									header={cv.content}
+									leftElement={<Radio obj={cv} state={select} setState={setSelect} key={cv.id} />}
+								/>
+							</motion.div>
 						);
 					}
 				})
@@ -142,21 +145,53 @@ const SelectChallengeView = (props) => {
 			<motion.div
 				className="absolute bottom-0"
 				initial="start"
-				animate={select.challenger && select.challenge_id_fk ? 'end' : ''}
+				animate={
+					(select.challenger && select.challenge_id_fk) || (select.challenger && select.customChallenge) ? (
+						'end'
+					) : (
+						''
+					)
+				}
 				variants={buttonPop}
-				transition={{ type: 'spring', damping: 8, duration: 0.3 }}
+				transition={{ type: 'spring', damping: 10, duration: 0.3 }}
 				onClick={() => {
-					POST_entry(gameID, select)
-						.then((res) => {
-							setNotification('success');
-							setTimeout(() => {
-								history.push(`/${username}`);
-							}, 3000);
+					// * this onclick is looking to see if the type is custom. If the challenge is custom
+					// * we need to create a customer challenge first before creating the entry.
+					if (select.challenger && select.customChallenge) {
+						// * Found to be custom so chain the axios calls
+						return POST_customChallenge(gameID, {
+							type: 'custom',
+							content: select.customChallenge
 						})
-						.catch((error) => {
-							setNotification('error');
-							console.log(error);
-						});
+							.then((res) => {
+								POST_entry(gameID, { challenge_id_fk: res.data[0].id, challenger: select.challenger })
+									.then(() => {
+										setNotification('success');
+										setTimeout(() => {
+											history.push(`/${username}`);
+										}, 3000);
+									})
+									.catch((error) => {
+										setNotification('error');
+										console.log(error);
+									});
+							})
+							.catch((err) => console.log(err));
+					}
+					else {
+						// * Since above isnt met then it's not custom
+						return POST_entry(gameID, select)
+							.then(() => {
+								setNotification('success');
+								setTimeout(() => {
+									history.push(`/${username}`);
+								}, 3000);
+							})
+							.catch((error) => {
+								setNotification('error');
+								console.log(error);
+							});
+					}
 				}}
 			>
 				<Button text={'Send Challenge'} bg={'blue'} icon={'challenge'} />
