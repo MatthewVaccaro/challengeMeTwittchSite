@@ -60,7 +60,7 @@ const SelectChallengeView = (props) => {
 
 	return (
 		<div className="container px-3 mx-auto sm:max-w-5xl">
-			{notification ? notification === 'success' ? (
+			{notification ? notification === 'success' || notification === 'upvote' ? (
 				<motion.div
 					className="absolute z-20 w-full left-0"
 					initial="start"
@@ -68,7 +68,7 @@ const SelectChallengeView = (props) => {
 					variants={position}
 					transition={{ ease: 'easeIn', duration: 0.5 }}
 				>
-					<Notification status={true} />
+					<Notification status={notification === 'upvote' ? 'upvote' : true} />
 				</motion.div>
 			) : (
 				<motion.div
@@ -160,9 +160,18 @@ const SelectChallengeView = (props) => {
 									.catch((error) => {
 										setNotification('error');
 										console.log(error);
+										setTimeout(() => {
+											setNotification('');
+										}, 3000);
 									});
 							})
-							.catch((err) => console.log(err));
+							.catch((err) => {
+								setNotification('error');
+								console.log(err);
+								setTimeout(() => {
+									setNotification('');
+								}, 3000);
+							});
 					}
 					else {
 						const findDuplicate = entries.filter((entry) => {
@@ -174,7 +183,7 @@ const SelectChallengeView = (props) => {
 						if (findDuplicate) {
 							return PUT_upvote(findDuplicate[0].id, { vote: 'plus' })
 								.then(() => {
-									setNotification('success');
+									setNotification('upvote');
 									setTimeout(() => {
 										history.push(`/${username}`);
 									}, 3000);
@@ -182,6 +191,9 @@ const SelectChallengeView = (props) => {
 								.catch((error) => {
 									setNotification('error');
 									console.log(error);
+									setTimeout(() => {
+										setNotification('');
+									}, 3000);
 								});
 						}
 						else {
@@ -195,6 +207,9 @@ const SelectChallengeView = (props) => {
 								.catch((error) => {
 									setNotification('error');
 									console.log(error);
+									setTimeout(() => {
+										setNotification('');
+									}, 3000);
 								});
 						}
 					}
