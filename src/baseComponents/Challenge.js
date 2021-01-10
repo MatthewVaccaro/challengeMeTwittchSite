@@ -5,16 +5,6 @@ import axios from 'axios';
 import Upvote from './upvote';
 
 const Challenge = ({ contents, user, tag, upvote, id }) => {
-	// function axiosUpvote(data) {
-	// 	axios
-	// 		.put(`http://localhost:4000/api/userApp/entryUpVote/${data.id}`, { vote: 'plus' })
-	// 		.then((res) => {
-	// 			return res.data;
-	// 		})
-	// 		.catch((err) => {
-	// 			return console.log(err);
-	// 		});
-	// }
 	return (
 		<div className={`flex-col shadow-xl rounded bg-white my-3`}>
 			<div className="pt-3 px-3 pb-2">

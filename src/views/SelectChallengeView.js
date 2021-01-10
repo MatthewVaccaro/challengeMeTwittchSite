@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { EntriesContext } from '../global/entriesContext';
 import { useHistory } from 'react-router-dom';
 import { motion } from 'framer-motion';
 //Request
-import { GET_challenges, POST_entry, POST_customChallenge } from '../axios/publicRequests';
+import { GET_challenges, POST_entry, POST_customChallenge, PUT_upvote } from '../axios/publicRequests';
 //Animation
-import { buttonPop, position, tagTypes } from '../animationVariants';
+import { buttonPop, position } from '../animationVariants';
 
 //Components
 import Back from '../utils/Back';
@@ -16,16 +17,17 @@ import TypeTab from '../baseComponents/typeTab';
 import Button from '../utils/Button';
 import Notification from '../baseComponents/notification';
 const SelectChallengeView = (props) => {
-	// * Get id and username
+	const [ entries, setEntries ] = useContext(EntriesContext);
 	const gameID = props.match.params.id;
 	const username = props.match.params.username;
-	// * used for moving history
+
 	let history = useHistory();
-	// * state for all challenges from DB
+
 	const [ challenges, setChallenges ] = useState();
-	// * object being sent to the DB
+
 	const [ select, setSelect ] = useState({
 		challenger: '',
+		content: '',
 		challenge_id_fk: '',
 		customChallenge: ''
 	});
@@ -54,7 +56,7 @@ const SelectChallengeView = (props) => {
 
 	return (
 		<div className="container px-3 mx-auto sm:max-w-5xl">
-			{notification ? notification === 'success' ? (
+			{notification ? notification === 'success' || notification === 'upvote' ? (
 				<motion.div
 					className="absolute z-20 w-full left-0"
 					initial="start"
@@ -62,7 +64,7 @@ const SelectChallengeView = (props) => {
 					variants={position}
 					transition={{ ease: 'easeIn', duration: 0.5 }}
 				>
-					<Notification status={true} />
+					<Notification status={notification === 'upvote' ? 'upvote' : true} />
 				</motion.div>
 			) : (
 				<motion.div
@@ -110,6 +112,7 @@ const SelectChallengeView = (props) => {
 						return (
 							<motion.div>
 								<Card
+									id={cv.id}
 									header={cv.content}
 									leftElement={<Radio obj={cv} state={select} setState={setSelect} key={cv.id} />}
 								/>
@@ -133,10 +136,7 @@ const SelectChallengeView = (props) => {
 				variants={buttonPop}
 				transition={{ type: 'spring', damping: 10, duration: 0.3 }}
 				onClick={() => {
-					// * this onclick is looking to see if the type is custom. If the challenge is custom
-					// * we need to create a customer challenge first before creating the entry.
 					if (select.challenger && select.customChallenge) {
-						// * Found to be custom so chain the axios calls
 						return POST_customChallenge(gameID, {
 							type: 'custom',
 							content: select.customChallenge
@@ -152,23 +152,56 @@ const SelectChallengeView = (props) => {
 									.catch((error) => {
 										setNotification('error');
 										console.log(error);
+										setTimeout(() => {
+											setNotification('');
+										}, 3000);
 									});
 							})
-							.catch((err) => console.log(err));
+							.catch((err) => {
+								setNotification('error');
+								console.log(err);
+								setTimeout(() => {
+									setNotification('');
+								}, 3000);
+							});
 					}
 					else {
-						// * Since above isnt met then it's not custom
-						return POST_entry(gameID, select)
-							.then(() => {
-								setNotification('success');
-								setTimeout(() => {
-									history.push(`/${username}`);
-								}, 3000);
-							})
-							.catch((error) => {
-								setNotification('error');
-								console.log(error);
-							});
+						const findDuplicate = entries.filter((entry) => {
+							return entry.content === select.content;
+						});
+
+						if (findDuplicate) {
+							return PUT_upvote(findDuplicate[0].id, { vote: 'plus' })
+								.then(() => {
+									setNotification('upvote');
+									setTimeout(() => {
+										history.push(`/${username}`);
+									}, 3000);
+								})
+								.catch((error) => {
+									setNotification('error');
+									console.log(error);
+									setTimeout(() => {
+										setNotification('');
+									}, 3000);
+								});
+						}
+						else {
+							return POST_entry(gameID, select)
+								.then(() => {
+									setNotification('success');
+									setTimeout(() => {
+										history.push(`/${username}`);
+									}, 3000);
+								})
+								.catch((error) => {
+									setNotification('error');
+									console.log(error);
+									setTimeout(() => {
+										setNotification('');
+									}, 3000);
+								});
+						}
 					}
 				}}
 			>

@@ -38,14 +38,7 @@ const QueueView = () => {
 			<div className="flex flex-col relative z-10 h-40 justify-center sm: mt-4">
 				<div className="flex items-center sm:justify-center">
 					<div className=" w-3 h-3 rounded-lg bg-green mr-2 " />
-					<p
-						onClick={() => {
-							console.log('This is stream in queue', stream, entries);
-						}}
-						className="p-light"
-					>
-						Playing
-					</p>
+					<p className="p-light">Playing</p>
 				</div>
 				<h2 className="h2-light mt-1 mb-4 sm:text-center"> Call of Duty: Warzone</h2>
 				<div className="flex items-center sm:justify-center">
