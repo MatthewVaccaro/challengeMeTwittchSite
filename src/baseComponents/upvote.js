@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
 import { PUT_upvote } from '../axios/publicRequests';
 
 import { EntriesContext } from '../global/entriesContext';

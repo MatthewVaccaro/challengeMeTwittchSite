@@ -18,23 +18,19 @@ import Button from '../utils/Button';
 import Notification from '../baseComponents/notification';
 const SelectChallengeView = (props) => {
 	const [ entries, setEntries ] = useContext(EntriesContext);
-	console.log('entries', entries);
-	// * Get id and username
 	const gameID = props.match.params.id;
 	const username = props.match.params.username;
-	// * used for moving history
+
 	let history = useHistory();
-	// * state for all challenges from DB
+
 	const [ challenges, setChallenges ] = useState();
-	// * object being sent to the DB
+
 	const [ select, setSelect ] = useState({
 		challenger: '',
 		content: '',
 		challenge_id_fk: '',
 		customChallenge: ''
 	});
-
-	console.log('entries', entries, 'challenges', challenges, 'state', select);
 
 	const [ notification, setNotification ] = useState();
 	const [ type, setType ] = useState('meme');
@@ -117,7 +113,6 @@ const SelectChallengeView = (props) => {
 							<motion.div>
 								<Card
 									id={cv.id}
-									challengeID={''}
 									header={cv.content}
 									leftElement={<Radio obj={cv} state={select} setState={setSelect} key={cv.id} />}
 								/>
@@ -141,10 +136,7 @@ const SelectChallengeView = (props) => {
 				variants={buttonPop}
 				transition={{ type: 'spring', damping: 10, duration: 0.3 }}
 				onClick={() => {
-					// * this onclick is looking to see if the type is custom. If the challenge is custom
-					// * we need to create a customer challenge first before creating the entry.
 					if (select.challenger && select.customChallenge) {
-						// * Found to be custom so chain the axios calls
 						return POST_customChallenge(gameID, {
 							type: 'custom',
 							content: select.customChallenge
@@ -177,8 +169,6 @@ const SelectChallengeView = (props) => {
 						const findDuplicate = entries.filter((entry) => {
 							return entry.content === select.content;
 						});
-
-						console.log('find Dups', findDuplicate);
 
 						if (findDuplicate) {
 							return PUT_upvote(findDuplicate[0].id, { vote: 'plus' })
