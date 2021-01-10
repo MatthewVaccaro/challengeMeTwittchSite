@@ -5,7 +5,7 @@ const Radio = ({ obj, state, setState }) => {
 	return (
 		<div
 			onClick={() => {
-				setState({ ...state, challenge_id_fk: obj.id });
+				setState({ ...state, challenge_id_fk: obj.id, content: obj.content });
 				console.log('state in radio button', state);
 			}}
 			className={`bg-white_100 w-6 h-6 rounded-2xl flex items-center justify-center mr-4`}

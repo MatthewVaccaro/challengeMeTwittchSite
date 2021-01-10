@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { EntriesContext } from '../global/entriesContext';
 import { useHistory } from 'react-router-dom';
 import { motion } from 'framer-motion';
 //Request
-import { GET_challenges, POST_entry, POST_customChallenge } from '../axios/publicRequests';
+import { GET_challenges, POST_entry, POST_customChallenge, PUT_upvote } from '../axios/publicRequests';
 //Animation
-import { buttonPop, position, tagTypes } from '../animationVariants';
+import { buttonPop, position } from '../animationVariants';
 
 //Components
 import Back from '../utils/Back';
@@ -16,6 +17,8 @@ import TypeTab from '../baseComponents/typeTab';
 import Button from '../utils/Button';
 import Notification from '../baseComponents/notification';
 const SelectChallengeView = (props) => {
+	const [ entries, setEntries ] = useContext(EntriesContext);
+	console.log('entries', entries);
 	// * Get id and username
 	const gameID = props.match.params.id;
 	const username = props.match.params.username;
@@ -26,9 +29,12 @@ const SelectChallengeView = (props) => {
 	// * object being sent to the DB
 	const [ select, setSelect ] = useState({
 		challenger: '',
+		content: '',
 		challenge_id_fk: '',
 		customChallenge: ''
 	});
+
+	console.log('entries', entries, 'challenges', challenges, 'state', select);
 
 	const [ notification, setNotification ] = useState();
 	const [ type, setType ] = useState('meme');
@@ -110,6 +116,8 @@ const SelectChallengeView = (props) => {
 						return (
 							<motion.div>
 								<Card
+									id={cv.id}
+									challengeID={''}
 									header={cv.content}
 									leftElement={<Radio obj={cv} state={select} setState={setSelect} key={cv.id} />}
 								/>
@@ -157,18 +165,38 @@ const SelectChallengeView = (props) => {
 							.catch((err) => console.log(err));
 					}
 					else {
-						// * Since above isnt met then it's not custom
-						return POST_entry(gameID, select)
-							.then(() => {
-								setNotification('success');
-								setTimeout(() => {
-									history.push(`/${username}`);
-								}, 3000);
-							})
-							.catch((error) => {
-								setNotification('error');
-								console.log(error);
-							});
+						const findDuplicate = entries.filter((entry) => {
+							return entry.content === select.content;
+						});
+
+						console.log('find Dups', findDuplicate);
+
+						if (findDuplicate) {
+							return PUT_upvote(findDuplicate[0].id, { vote: 'plus' })
+								.then(() => {
+									setNotification('success');
+									setTimeout(() => {
+										history.push(`/${username}`);
+									}, 3000);
+								})
+								.catch((error) => {
+									setNotification('error');
+									console.log(error);
+								});
+						}
+						else {
+							return POST_entry(gameID, select)
+								.then(() => {
+									setNotification('success');
+									setTimeout(() => {
+										history.push(`/${username}`);
+									}, 3000);
+								})
+								.catch((error) => {
+									setNotification('error');
+									console.log(error);
+								});
+						}
 					}
 				}}
 			>
