@@ -4,7 +4,7 @@ import Button from '../utils/Button';
 import externalLinkIcon from '../assets/icons/externalLinkIcon.svg';
 import { GET_singleGame } from '../axios/publicRequests';
 
-const Header = ({ image }) => {
+const Header = () => {
 	const [ stream, setStream ] = useContext(StreamContext);
 	const [ game, setGame ] = useState();
 
@@ -57,7 +57,7 @@ const Header = ({ image }) => {
 					{stream && game ? stream.live ? game.title : stream.username : ''}
 				</h2>
 				<div className="flex items-center sm:justify-center">
-					<img className="mr-3" src={''} alt="Streamer Avatar" />
+					<img className="mr-3" src={stream ? stream.avatar : ''} alt="Streamer Avatar" />
 					<p className="mr-3 p-light"> Watch Stream</p>
 					<img src={externalLinkIcon} alt="External link icon" />
 				</div>
