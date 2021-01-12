@@ -65,7 +65,8 @@ const Header = () => {
 			<div className="relative z-10 sm:right-0 sm:left-0 sm:m-auto">
 				<Button
 					text={'Send Challenge'}
-					bg={'blue'}
+					bg={stream ? `#${stream.mainColor}` : 'blue'}
+					textColor={stream ? `#${stream.mainTextColor}` : 'blue'}
 					icon={'challenge'}
 					size={'full'}
 					location={stream ? `${stream.username}/challenges/${stream.game_id_fk}` : ''}
