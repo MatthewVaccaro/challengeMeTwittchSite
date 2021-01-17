@@ -10,7 +10,7 @@ import Header from '../baseComponents/header';
 import { GET_streamer, GET_entries } from '../axios/publicRequests';
 
 // Assets
-import profilePhoto from '../assets/profilePhoto.png';
+
 import externalLinkIcon from '../assets/icons/externalLinkIcon.svg';
 
 const QueueView = () => {

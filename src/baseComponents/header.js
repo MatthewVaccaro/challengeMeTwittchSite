@@ -62,15 +62,28 @@ const Header = () => {
 					<img src={externalLinkIcon} alt="External link icon" />
 				</div>
 			</div>
-			<div className="relative z-10 sm:right-0 sm:left-0 sm:m-auto">
-				<Button
-					text={'Send Challenge'}
-					bg={stream ? `#${stream.mainColor}` : 'blue'}
-					textColor={stream ? `#${stream.mainTextColor}` : 'blue'}
-					icon={'challenge'}
-					size={'full'}
-					location={stream ? `${stream.username}/challenges/${stream.game_id_fk}` : ''}
-				/>
+			<div className="relative z-10 right-0 left-0 m-auto max-w-sm">
+				{stream ? stream.live ? (
+					<Button
+						text={'Send Challenge'}
+						bg={stream ? `#${stream.mainColor}` : 'blue'}
+						textColor={stream ? `#${stream.mainTextColor}` : 'blue'}
+						icon={'challenge'}
+						size={'full'}
+						location={stream ? `${stream.username}/challenges/${stream.game_id_fk}` : ''}
+					/>
+				) : (
+					<Button
+						text={'Send Challenge'}
+						bg={stream ? `#${stream.mainColor}` : 'blue'}
+						textColor={stream ? `#${stream.mainTextColor}` : 'blue'}
+						icon={'challenge'}
+						size={'full'}
+						location={'disabled'}
+					/>
+				) : (
+					''
+				)}
 			</div>
 		</div>
 	);
