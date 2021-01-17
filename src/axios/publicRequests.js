@@ -32,3 +32,8 @@ export async function POST_customChallenge(game_id, data) {
 	const request = await axios.post(`${URL}/api/userApp/customChallenge/${game_id}`, data);
 	return request;
 }
+
+export async function GET_singleGame(game_id) {
+	const request = await axios.get(`${URL}/api/streamerServices/getGame/${game_id}`);
+	return request;
+}

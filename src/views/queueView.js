@@ -10,7 +10,7 @@ import Header from '../baseComponents/header';
 import { GET_streamer, GET_entries } from '../axios/publicRequests';
 
 // Assets
-import profilePhoto from '../assets/profilePhoto.png';
+
 import externalLinkIcon from '../assets/icons/externalLinkIcon.svg';
 
 const QueueView = () => {
@@ -35,7 +35,7 @@ const QueueView = () => {
 	return (
 		<div className="container px-3 mx-auto max-w-3/4 mt-4 sm:max-w-5xl sm:mt-0 sm:flex sm:flex-col sm:justify-center">
 			<Header />
-			<div className="flex flex-col relative z-10 h-40 justify-center sm: mt-4">
+			{/* <div className="flex flex-col relative z-10 h-40 justify-center sm: mt-4">
 				<div className="flex items-center sm:justify-center">
 					<div className=" w-3 h-3 rounded-lg bg-green mr-2 " />
 					<p className="p-light">Playing</p>
@@ -55,7 +55,7 @@ const QueueView = () => {
 					size={'full'}
 					location={stream ? `${stream.username}/challenges/${stream.game_id_fk}` : ''}
 				/>
-			</div>
+			</div> */}
 			<p className="p-mid mt-3 sm:mt-20"> Next in Queue</p>
 
 			{entries ? (
