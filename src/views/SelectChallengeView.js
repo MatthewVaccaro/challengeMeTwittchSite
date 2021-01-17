@@ -34,7 +34,7 @@ const SelectChallengeView = (props) => {
 		customChallenge: ''
 	});
 
-	console.log('steammmmmmm', stream);
+	console.log('data', stream, entries, select);
 
 	const [ notification, setNotification ] = useState();
 	const [ type, setType ] = useState('meme');
@@ -178,12 +178,16 @@ const SelectChallengeView = (props) => {
 									});
 							}
 							else {
-								const findDuplicate = entries.filter((entry) => {
-									return entry.content === select.content;
-								});
+								const findDuplicate =
+									entries.length > 0
+										? entries.filter((entry) => {
+												return entry.content === select.content;
+											})
+										: '';
 
-								if (findDuplicate) {
-									return PUT_upvote(findDuplicate[0].id, { vote: 'plus' })
+								if (findDuplicate.length > 0) {
+									console.log('ran');
+									return PUT_upvote(findDuplicate.id, { vote: 'plus' })
 										.then(() => {
 											setNotification('upvote');
 											setTimeout(() => {

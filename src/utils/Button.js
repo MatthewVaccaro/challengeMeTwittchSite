@@ -14,12 +14,7 @@ const Button = ({ size, text, bg, textColor, icon, location }) => {
 	const buttonSize = size === 'full' ? 'flex justify-center' : 'flex';
 	return (
 		<div className={size ? '' : 'inline-block'}>
-			{location === 'disabled' ? (
-				<div className={` transition-all bg-black_100 duration-300 rounded-md px-6 py-3 ${buttonSize}`}>
-					{icon ? <img className="mr-3" src={selectedIcon} alt="Icon" /> : ''}
-					<p className="text-base text-white font-medium text-center"> {text}</p>
-				</div>
-			) : (
+			{location ? (
 				<Link to={`${location}`}>
 					<div
 						style={{ background: bg }}
@@ -29,6 +24,11 @@ const Button = ({ size, text, bg, textColor, icon, location }) => {
 						<p className="text-base text-white font-medium text-center"> {text}</p>
 					</div>
 				</Link>
+			) : (
+				<div className={` transition-all bg-black_100 duration-300 rounded-md px-6 py-3 ${buttonSize}`}>
+					{icon ? <img className="mr-3" src={selectedIcon} alt="Icon" /> : ''}
+					<p className="text-base text-white font-medium text-center"> {text}</p>
+				</div>
 			)}
 		</div>
 	);
