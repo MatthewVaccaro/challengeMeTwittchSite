@@ -186,8 +186,8 @@ const SelectChallengeView = (props) => {
 										: '';
 
 								if (findDuplicate.length > 0) {
-									console.log('ran');
-									return PUT_upvote(findDuplicate.id, { vote: 'plus' })
+									console.log('ran', findDuplicate);
+									return PUT_upvote(findDuplicate[0].id, { vote: 'plus' })
 										.then(() => {
 											setNotification('upvote');
 											setTimeout(() => {
